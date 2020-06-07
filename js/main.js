@@ -68,12 +68,12 @@ var getPhotos = function (quantity) {
 var photosData = getPhotos(PICTURES_AMOUNT);
 
 var createPhotoElement = function (data) {
-  var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-  var pictureElement = pictureTemplate.cloneNode(true);
-  pictureElement.querySelector('.picture__img').src = data.url;
-  pictureElement.querySelector('.picture__comments').textContent = data.comments.length;
-  pictureElement.querySelector('.picture__likes').textContent = data.likes;
-  return pictureElement;
+  var photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+  var photoElement = photoTemplate.cloneNode(true);
+  photoElement.querySelector('.picture__img').src = data.url;
+  photoElement.querySelector('.picture__comments').textContent = data.comments.length;
+  photoElement.querySelector('.picture__likes').textContent = data.likes;
+  return photoElement;
 };
 
 var photosElements = photosData.map(createPhotoElement);
