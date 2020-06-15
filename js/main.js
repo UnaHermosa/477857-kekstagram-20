@@ -29,7 +29,11 @@ var bigPhoto = document.querySelector('.big-picture');
 var socialCommentsList = bigPhoto.querySelector('.social__comments');
 var socialCommentItem = bigPhoto.querySelector('.social__comment');
 
-document.querySelector('.pictures__title').classList.remove('visually-hidden');
+var fileUploadInput = document.querySelector('#upload-file');
+var fileCloseModal = document.querySelector('#upload-cancel');
+var fileEditingModal = document.querySelector('.img-upload__overlay');
+
+// document.querySelector('.pictures__title').classList.remove('visually-hidden');
 
 var getRandomValue = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -91,10 +95,10 @@ var renderPhotos = function (elements, place) {
 
 renderPhotos(photosElements, picturesList);
 
-bigPhoto.classList.remove('hidden');
+// bigPhoto.classList.remove('hidden');
 bigPhoto.querySelector('.social__comment-count').classList.add('hidden');
 bigPhoto.querySelector('.comments-loader').classList.add('hidden');
-document.querySelector('body').classList.add('modal-open');
+// document.querySelector('body').classList.add('modal-open');
 
 var createComment = function (item) {
   var newComment = socialCommentItem.cloneNode(true);
@@ -120,4 +124,28 @@ var renderBigPhoto = function (photo) {
   renderComments(photo);
 };
 
-renderBigPhoto(photosData[0]);
+// renderBigPhoto(photosData[0]);
+
+var onModalEscapePress = function (evt) {
+  evt.preventDefault();
+  if (evt.keyCode === 27) {
+    closeEditingModal();
+  }
+};
+
+var openEditingModal = function () {
+  fileEditingModal.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
+  document.addEventListener('keydown', onModalEscapePress);
+};
+
+var closeEditingModal = function () {
+  fileEditingModal.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  document.removeEventListener('keydown', onModalEscapePress);
+  fileUploadInput.value = '';
+};
+
+fileUploadInput.addEventListener('change', function () {
+  openEditingModal();
+});
