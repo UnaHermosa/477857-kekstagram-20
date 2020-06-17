@@ -1,12 +1,18 @@
 'use strict';
 
 var PICTURES_AMOUNT = 25;
-var LIKES_AMOUNT_MIN = 15;
-var LIKES_AMOUNT_MAX = 200;
-var MIN_COMMENTS_AMOUNT = 1;
-var MAX_COMMENT_AMOUNT = 3;
-var MIN_AVATAR_AMOUNT = 1;
-var MAX_AVATAR_AMOUNT = 6;
+var LikesAmount = {
+  MIN: 15,
+  MAX: 200
+};
+var CommentsAmount = {
+  MIN: 1,
+  MAX: 3
+};
+var AvatarAmount = {
+  MIN: 1,
+  MAX: 6
+};
 var usersNames = [
   'Саша',
   'Лёлик',
@@ -29,11 +35,7 @@ var bigPhoto = document.querySelector('.big-picture');
 var socialCommentsList = bigPhoto.querySelector('.social__comments');
 var socialCommentItem = bigPhoto.querySelector('.social__comment');
 
-var fileUploadInput = document.querySelector('#upload-file');
-var fileCloseModal = document.querySelector('#upload-cancel');
-var fileEditingModal = document.querySelector('.img-upload__overlay');
-
-// document.querySelector('.pictures__title').classList.remove('visually-hidden');
+document.querySelector('.pictures__title').classList.remove('visually-hidden');
 
 var getRandomValue = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -42,7 +44,7 @@ var getRandomValue = function (min, max) {
 var getComment = function () {
   var randomComment = usersComments[getRandomValue(0, usersComments.length - 1)];
   var comment = {
-    avatar: 'img/avatar-' + getRandomValue(MIN_AVATAR_AMOUNT, MAX_AVATAR_AMOUNT) + '.svg',
+    avatar: 'img/avatar-' + getRandomValue(AvatarAmount.MIN, AvatarAmount.MAX) + '.svg',
     message: (getRandomValue(0, 1)) ? randomComment : randomComment += ' ' + randomComment,
     name: usersNames[getRandomValue(0, usersNames.length - 1)]
   };
@@ -51,7 +53,7 @@ var getComment = function () {
 
 var getComments = function () {
   var commentsArr = [];
-  var comments = getRandomValue(MIN_COMMENTS_AMOUNT, MAX_COMMENT_AMOUNT);
+  var comments = getRandomValue(CommentsAmount.MIN, CommentsAmount.MAX);
   for (var i = 0; i < comments; i++) {
     commentsArr.push(getComment());
   }
@@ -64,7 +66,7 @@ var getPhotos = function (quantity) {
     var photo = {
       url: 'photos/' + getRandomValue(1, PICTURES_AMOUNT) + '.jpg',
       description: photosDescriptions[getRandomValue(0, photosDescriptions.length - 1)],
-      likes: getRandomValue(LIKES_AMOUNT_MIN, LIKES_AMOUNT_MAX),
+      likes: getRandomValue(LikesAmount.MIN, LikesAmount.MAX),
       comments: getComments()
     };
     photos.push(photo);
@@ -95,10 +97,10 @@ var renderPhotos = function (elements, place) {
 
 renderPhotos(photosElements, picturesList);
 
-// bigPhoto.classList.remove('hidden');
+bigPhoto.classList.remove('hidden');
 bigPhoto.querySelector('.social__comment-count').classList.add('hidden');
 bigPhoto.querySelector('.comments-loader').classList.add('hidden');
-// document.querySelector('body').classList.add('modal-open');
+document.querySelector('body').classList.add('modal-open');
 
 var createComment = function (item) {
   var newComment = socialCommentItem.cloneNode(true);
@@ -124,11 +126,35 @@ var renderBigPhoto = function (photo) {
   renderComments(photo);
 };
 
-// renderBigPhoto(photosData[0]);
+renderBigPhoto(photosData[0]);
+document.querySelector('.pictures__title').classList.add('visually-hidden');
+bigPhoto.classList.add('hidden');
+document.querySelector('body').classList.remove('modal-open');
+
+// module4-task2
+
+var fileUploadInput = document.querySelector('#upload-file');
+var fileCloseModal = document.querySelector('#upload-cancel');
+var fileEditingModal = document.querySelector('.img-upload__overlay');
+var imgUploadScale = document.querySelector('.img-upload__scale');
+var scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
+var scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
+var scaleControlInput = imgUploadScale.querySelector('.scale__control--value');
+var imgUploadPreview = document.querySelector('.img-upload__preview > img');
+var KeyCode = {
+  ENTER: 13,
+  ESCAPE: 27
+};
+var Scale = {
+  STEP: 25,
+  MIN: 25,
+  MAX: 100,
+  INITIAL: 100
+};
 
 var onModalEscapePress = function (evt) {
   evt.preventDefault();
-  if (evt.keyCode === 27) {
+  if (evt.keyCode === KeyCode.ESCAPE) {
     closeEditingModal();
   }
 };
@@ -142,10 +168,15 @@ var openEditingModal = function () {
 var closeEditingModal = function () {
   fileEditingModal.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
-  document.removeEventListener('keydown', onModalEscapePress);
+  fileCloseModal.removeEventListener('keydown', onModalEscapePress);
   fileUploadInput.value = '';
 };
 
-fileUploadInput.addEventListener('change', function () {
+fileUploadInput.addEventListener('change', function (evt) {
+  evt.preventDefault();
   openEditingModal();
+});
+
+fileCloseModal.addEventListener('click', function () {
+  closeEditingModal();
 });
