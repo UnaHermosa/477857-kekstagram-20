@@ -137,20 +137,22 @@ var fileUploadInput = document.querySelector('#upload-file');
 var fileCloseModal = document.querySelector('#upload-cancel');
 var fileEditingModal = document.querySelector('.img-upload__overlay');
 var imgUploadScale = document.querySelector('.img-upload__scale');
-var scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
-var scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
-var scaleControlInput = imgUploadScale.querySelector('.scale__control--value');
-var imgUploadPreview = document.querySelector('.img-upload__preview > img');
 var KeyCode = {
   ENTER: 13,
   ESCAPE: 27
 };
+
+var scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
+var scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
+var scaleControlInput = imgUploadScale.querySelector('.scale__control--value');
+var imgUploadPreview = document.querySelector('.img-upload__preview > img');
 var Scale = {
   STEP: 25,
   MIN: 25,
   MAX: 100,
   INITIAL: 100
 };
+var currentScaleValue = Scale.INITIAL;
 
 var onModalEscapePress = function (evt) {
   evt.preventDefault();
@@ -163,6 +165,8 @@ var openEditingModal = function () {
   fileEditingModal.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', onModalEscapePress);
+  scaleControlSmaller.addEventListener('click', onScaleControlSmallerPress);
+  scaleControlBigger.addEventListener('click', onScaleControlBiggerPress);
 };
 
 var closeEditingModal = function () {
@@ -172,11 +176,31 @@ var closeEditingModal = function () {
   fileUploadInput.value = '';
 };
 
-fileUploadInput.addEventListener('change', function (evt) {
-  evt.preventDefault();
+var resizePicture = function () {
+  scaleControlInput.value = currentScaleValue + '%';
+  imgUploadPreview.style.transform = 'scale(' + currentScaleValue * 0.01 + ')';
+};
+
+var onScaleControlSmallerPress = function () {
+  if (currentScaleValue <= Scale.INITIAL && currentScaleValue > Scale.MIN) {
+    currentScaleValue -= Scale.STEP;
+    resizePicture();
+  }
+};
+
+var onScaleControlBiggerPress = function () {
+  if (currentScaleValue >= Scale.MIN && currentScaleValue < Scale.INITIAL) {
+    currentScaleValue += Scale.STEP;
+    resizePicture();
+  }
+};
+
+fileUploadInput.addEventListener('change', function () {
   openEditingModal();
 });
 
 fileCloseModal.addEventListener('click', function () {
   closeEditingModal();
 });
+
+resizePicture();
