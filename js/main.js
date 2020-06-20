@@ -146,6 +146,12 @@ var scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller
 var scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
 var scaleControlInput = imgUploadScale.querySelector('.scale__control--value');
 var imgUploadPreview = document.querySelector('.img-upload__preview > img');
+var imgUploadEffectsContainer = document.querySelector('.img-upload__effects');
+var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
+var effectLevelPin = fileEditingModal.querySelector('.effect__level-pin');
+var effectLevelLine = fileEditingModal.querySelector('.effect__level-line');
+
+
 var Scale = {
   STEP: 25,
   MIN: 25,
@@ -153,6 +159,21 @@ var Scale = {
   INITIAL: 100
 };
 var currentScaleValue = Scale.INITIAL;
+
+var Filter = {
+  CHROME: 'chrome',
+  SEPIA: 'sepia',
+  MARVIN: 'marvin',
+  PHOBOS: 'phobos',
+  HEAT: 'heat',
+  ORIGIN: 'none'
+};
+
+var PHOBOS_MAX = 3;
+var MARVIN_MAX = 100;
+var HEAT_MAX = 3;
+
+var currentEffect = Filter.ORIGIN;
 
 var onModalEscapePress = function (evt) {
   evt.preventDefault();
@@ -165,18 +186,24 @@ var openEditingModal = function () {
   fileEditingModal.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', onModalEscapePress);
+  resizePhoto();
   scaleControlSmaller.addEventListener('click', onScaleControlSmallerPress);
   scaleControlBigger.addEventListener('click', onScaleControlBiggerPress);
+  imgUploadEffectLevel.classList.add('hidden');
+  imgUploadEffectsContainer.addEventListener('change', onEffectChange);
+  effectLevelPin.addEventListener('mouseup', onSaturationChange);
 };
 
 var closeEditingModal = function () {
   fileEditingModal.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   fileCloseModal.removeEventListener('keydown', onModalEscapePress);
+  scaleControlSmaller.removeEventListener('click', onScaleControlSmallerPress);
+  scaleControlBigger.removeEventListener('click', onScaleControlBiggerPress);
   fileUploadInput.value = '';
 };
 
-var resizePicture = function () {
+var resizePhoto = function () {
   scaleControlInput.value = currentScaleValue + '%';
   imgUploadPreview.style.transform = 'scale(' + currentScaleValue * 0.01 + ')';
 };
@@ -184,15 +211,54 @@ var resizePicture = function () {
 var onScaleControlSmallerPress = function () {
   if (currentScaleValue <= Scale.INITIAL && currentScaleValue > Scale.MIN) {
     currentScaleValue -= Scale.STEP;
-    resizePicture();
+    resizePhoto();
   }
 };
 
 var onScaleControlBiggerPress = function () {
   if (currentScaleValue >= Scale.MIN && currentScaleValue < Scale.INITIAL) {
     currentScaleValue += Scale.STEP;
-    resizePicture();
+    resizePhoto();
   }
+};
+
+var selectEffect = function (value) {
+  switch (currentEffect) {
+    case Filter.CHROME :
+      return 'grayscale(' + value + ')';
+    case Filter.SEPIA:
+      return 'sepia(' + value + ')';
+    case Filter.MARVIN:
+      return 'invert(' + value * MARVIN_MAX + '%)';
+    case Filter.PHOBOS:
+      return 'blur(' + PHOBOS_MAX * value + 'px)';
+    case Filter.HEAT:
+      return 'brightness(' + HEAT_MAX * value + ')';
+    default:
+      return 'none';
+  }
+};
+
+var onEffectChange = function (evt) {
+  currentEffect = evt.target.value;
+  imgUploadPreview.className = '';
+  imgUploadPreview.style.filter = Filter.ORIGIN;
+  imgUploadPreview.classList.add('effects__preview--' + evt.target.value);
+  if (evt.target.value !== 'none') {
+    imgUploadEffectLevel.classList.remove('hidden');
+  } else {
+    imgUploadEffectLevel.classList.add('hidden');
+  }
+  imgUploadPreview.style.filter = selectEffect(1);
+};
+
+var getSaturationValue = function (evt) {
+  return (evt.target.offsetLeft / effectLevelLine.offsetWidth).toFixed(2);
+};
+
+var onSaturationChange = function (evt) {
+  var value = getSaturationValue(evt);
+  imgUploadPreview.style.filter = selectEffect(value);
 };
 
 fileUploadInput.addEventListener('change', function () {
@@ -202,5 +268,3 @@ fileUploadInput.addEventListener('change', function () {
 fileCloseModal.addEventListener('click', function () {
   closeEditingModal();
 });
-
-resizePicture();
