@@ -136,7 +136,7 @@ document.querySelector('body').classList.remove('modal-open');
 var fileUploadInput = document.querySelector('#upload-file');
 var fileCloseModal = document.querySelector('#upload-cancel');
 var fileEditingModal = document.querySelector('.img-upload__overlay');
-var imgUploadScale = document.querySelector('.img-upload__scale');
+var imgUploadScale = fileEditingModal.querySelector('.img-upload__scale');
 var KeyCode = {
   ENTER: 13,
   ESCAPE: 27
@@ -145,12 +145,12 @@ var KeyCode = {
 var scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
 var scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
 var scaleControlInput = imgUploadScale.querySelector('.scale__control--value');
-var imgUploadPreview = document.querySelector('.img-upload__preview > img');
-var imgUploadEffectsContainer = document.querySelector('.img-upload__effects');
-var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-var effectLevelPin = fileEditingModal.querySelector('.effect__level-pin');
-var effectLevelLine = fileEditingModal.querySelector('.effect__level-line');
-
+var imgUploadPreview = fileEditingModal.querySelector('.img-upload__preview img');
+var imgUploadEffectsContainer = fileEditingModal.querySelector('.img-upload__effects');
+var imgUploadEffectLevel = fileEditingModal.querySelector('.img-upload__effect-level');
+var effectLevelPin = fileEditingModal.querySelector('.effect-level__pin');
+var effectLevelLine = fileEditingModal.querySelector('.effect-level__line');
+var textHashtags = fileEditingModal.querySelector('.text__hashtags');
 
 var Scale = {
   STEP: 25,
@@ -173,10 +173,12 @@ var PHOBOS_MAX = 3;
 var MARVIN_MAX = 100;
 var HEAT_MAX = 3;
 
+var HASHTAGS_MAX = 5;
+var hashTagsRegExp = /^#[a-zа-яA-ZА-Я0-9]*$/;
+
 var currentEffect = Filter.ORIGIN;
 
 var onModalEscapePress = function (evt) {
-  evt.preventDefault();
   if (evt.keyCode === KeyCode.ESCAPE) {
     closeEditingModal();
   }
@@ -186,20 +188,32 @@ var openEditingModal = function () {
   fileEditingModal.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', onModalEscapePress);
+  textHashtags.addEventListener('focus', onInputFocus);
+  textHashtags.addEventListener('blur', onInputBlur);
   resizePhoto();
   scaleControlSmaller.addEventListener('click', onScaleControlSmallerPress);
   scaleControlBigger.addEventListener('click', onScaleControlBiggerPress);
   imgUploadEffectLevel.classList.add('hidden');
   imgUploadEffectsContainer.addEventListener('change', onEffectChange);
   effectLevelPin.addEventListener('mouseup', onSaturationChange);
+  textHashtags.addEventListener('input', function (evt) {
+    textHashtags.setCustomValidity(validateHashtags(evt.target.value));
+  });
 };
 
 var closeEditingModal = function () {
   fileEditingModal.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
+  textHashtags.removeEventListener('focus', onInputFocus);
+  textHashtags.removeEventListener('blur', onInputBlur);
   fileCloseModal.removeEventListener('keydown', onModalEscapePress);
   scaleControlSmaller.removeEventListener('click', onScaleControlSmallerPress);
   scaleControlBigger.removeEventListener('click', onScaleControlBiggerPress);
+  imgUploadEffectsContainer.removeEventListener('change', onEffectChange);
+  effectLevelPin.removeEventListener('mouseup', onSaturationChange);
+  textHashtags.removeEventListener('input', function (evt) {
+    textHashtags.setCustomValidity(validateHashtags(evt.target.value));
+  });
   fileUploadInput.value = '';
 };
 
@@ -260,6 +274,42 @@ var onSaturationChange = function (evt) {
   var value = getSaturationValue(evt);
   imgUploadPreview.style.filter = selectEffect(value);
 };
+
+var validateHashtags = function (value) {
+  var hashtags = value.toLowerCase().trim().split(/\s+/);
+  for (var i = 0; i < hashtags.length; i++) {
+    if (hashtags[i][0] !== '#') {
+      return 'Хэштег должен начинаться с #!';
+    }
+    if (hashtags.length === 1 && hashtags[i] === '#') {
+      return 'Хэштег не может быть только #!';
+    }
+    if (hashtags[i].lastIndexOf('#') !== 0) {
+      return 'Между хэштегами должен быть пробел!';
+    }
+    if (!hashTagsRegExp.test(hashtags[i])) {
+      return 'После # должны быть только буквы и числа. Нельзя использовать пробел, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д.!';
+    }
+    var findDuplicateHashtags = hashtags.filter(function (item) {
+      return item === hashtags[i];
+    });
+    if (findDuplicateHashtags.length > 1) {
+      return 'Один и тот же хэштег не может быть использован дважды!';
+    }
+  }
+  if (hashtags.length > HASHTAGS_MAX) {
+    return 'Нельзя указать больше пяти хэштегов!';
+  }
+  return '';
+};
+
+function onInputFocus() {
+  document.removeEventListener('keydown', onModalEscapePress);
+}
+
+function onInputBlur() {
+  document.addEventListener('keydown', onModalEscapePress);
+}
 
 fileUploadInput.addEventListener('change', function () {
   openEditingModal();
