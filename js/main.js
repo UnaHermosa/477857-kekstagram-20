@@ -203,6 +203,8 @@ var openEditingModal = function () {
     textHashtags.setCustomValidity(validateHashtags(evt.target.value));
   });
   textareaDescription.addEventListener('input', validateTextarea);
+  textareaDescription.addEventListener('focus', onInputFocus);
+  textareaDescription.addEventListener('blur', onInputBlur);
 };
 
 var closeEditingModal = function () {
@@ -219,6 +221,8 @@ var closeEditingModal = function () {
     textHashtags.setCustomValidity(validateHashtags(evt.target.value));
   });
   textareaDescription.removeEventListener('input', validateTextarea);
+  textareaDescription.removeEventListener('focus', onInputFocus);
+  textareaDescription.removeEventListener('blur', onInputBlur);
   fileUploadInput.value = '';
 };
 
