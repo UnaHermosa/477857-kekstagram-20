@@ -350,13 +350,15 @@ var onPreviewEnterPress = function (evt) {
 };
 
 var onCustomPhotoClick = function (evt) {
-  var customPhoto = evt.target.attributes.src.value;
-  for (var i = 0; i < photosData.length; i++) {
-    if (customPhoto === photosData[i].url) {
-      renderBigPhoto(photosData[i]);
+  if (evt.target === '.picture') {
+    var customPhoto = evt.getAttribute('src');
+    for (var i = 0; i < photosData.length; i++) {
+      if (customPhoto === photosData[i].url) {
+        renderBigPhoto(photosData[i]);
+      }
     }
+    openPreviewWindow();
   }
-  openPreviewWindow();
 };
 
 var openPreviewWindow = function () {
