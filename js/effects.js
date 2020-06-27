@@ -15,7 +15,6 @@
   var currentEffect = Filter.ORIGIN;
 
   var imgUploadPreview = document.querySelector('.img-upload__preview img');
-  var imgUploadEffectsContainer = document.querySelector('.img-upload__effects');
   var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
   var effectLevelLine = document.querySelector('.effect-level__line');
 
