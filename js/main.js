@@ -87,11 +87,12 @@
   }
 
   var findPhotoData = function (customPhoto) {
-    for (var i = 0; i < window.data.photos.length; i++) {
-      if (customPhoto === window.data.photos[i].url) {
-        window.photoPreview.bigPhoto(window.data.photos[i]);
+    var photos = window.data.photos;
+    photos.forEach(function (item) {
+      if (customPhoto === item.url) {
+        window.photoPreview.bigPhoto(item);
       }
-    }
+    });
   };
 
   var onPreviewEnterPress = function (evt) {

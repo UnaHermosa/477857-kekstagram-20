@@ -16,11 +16,11 @@
     return newComment;
   };
 
-  var renderComments = function (item) {
+  var renderComments = function (photo) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < item.comments.length; i++) {
-      fragment.appendChild(createComment(item.comments[i]));
-    }
+    photo.comments.forEach(function (item) {
+      fragment.appendChild(createComment(item));
+    });
     socialCommentsList.textContent = '';
     socialCommentsList.appendChild(fragment);
   };
