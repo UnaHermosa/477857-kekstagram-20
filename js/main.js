@@ -86,14 +86,18 @@
     document.addEventListener('keydown', onModalEscapePress);
   }
 
+  var findPhotoData = function (customPhoto) {
+    for (var i = 0; i < window.data.photos.length; i++) {
+      if (customPhoto === window.data.photos[i].url) {
+        window.photoPreview.bigPhoto(window.data.photos[i]);
+      }
+    }
+  };
+
   var onPreviewEnterPress = function (evt) {
     if (evt.keyCode === window.util.ENTER) {
       var customPhoto = evt.target.children[0].getAttribute('src');
-      for (var i = 0; i < window.data.photos.length; i++) {
-        if (customPhoto === window.data.photos[i].url) {
-          window.photoPreview.bigPhoto(window.data.photos[i]);
-        }
-      }
+      findPhotoData(customPhoto);
       openPreviewWindow();
     }
   };
@@ -101,11 +105,7 @@
   var onCustomPhotoClick = function (evt) {
     if (evt.target.className === 'picture__img') {
       var customPhoto = evt.target.getAttribute('src');
-      for (var i = 0; i < window.data.photos.length; i++) {
-        if (customPhoto === window.data.photos[i].url) {
-          window.photoPreview.bigPhoto(window.data.photos[i]);
-        }
-      }
+      findPhotoData(customPhoto);
       openPreviewWindow();
     }
   };
