@@ -6,11 +6,12 @@
     MAX: 100,
     INITIAL: 100
   };
+  var PERCENT = 0.01;
   var currentScaleValue = Scale.INITIAL;
 
   var resizePhoto = function () {
     scaleControlInput.value = currentScaleValue + '%';
-    imgUploadPreview.style.transform = 'scale(' + currentScaleValue * 0.01 + ')';
+    imgUploadPreview.style.transform = 'scale(' + currentScaleValue * PERCENT + ')';
   };
 
   var imgUploadPreview = document.querySelector('.img-upload__preview img');
@@ -21,7 +22,7 @@
     if (currentScaleValue <= Scale.INITIAL && currentScaleValue > Scale.MIN) {
       currentScaleValue -= Scale.STEP;
       scaleControlInput.value = currentScaleValue + '%';
-      imgUploadPreview.style.transform = 'scale(' + currentScaleValue * 0.01 + ')';
+      imgUploadPreview.style.transform = 'scale(' + currentScaleValue * PERCENT + ')';
     }
   };
 
@@ -29,7 +30,7 @@
     if (currentScaleValue >= Scale.MIN && currentScaleValue < Scale.INITIAL) {
       currentScaleValue += Scale.STEP;
       scaleControlInput.value = currentScaleValue + '%';
-      imgUploadPreview.style.transform = 'scale(' + currentScaleValue * 0.01 + ')';
+      imgUploadPreview.style.transform = 'scale(' + currentScaleValue * PERCENT + ')';
     }
   };
 

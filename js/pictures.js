@@ -15,9 +15,9 @@
 
   var renderPhotos = function (elements, place) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < elements.length; i++) {
-      fragment.appendChild(elements[i]);
-    }
+    elements.forEach(function (item) {
+      fragment.appendChild(item);
+    });
     place.appendChild(fragment);
   };
 
