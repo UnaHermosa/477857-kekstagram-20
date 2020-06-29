@@ -18,33 +18,33 @@
 
   var validateHashtags = function (value) {
     var hashtags = value.toLowerCase().trim().split(/\s+/);
-    for (var i = 0; i < hashtags.length; i++) {
-      if (hashtags[i][0] !== '#') {
+    hashtags.forEach(function (item) {
+      if (item[0] !== '#') {
         return Errors.LOST_HASH;
       }
-      if (hashtags.length === 1 && hashtags[i] === '#') {
+      if (item.length === 1 && item === '#') {
         return Errors.ONLY_HASH;
       }
-      if (hashtags[i].lastIndexOf('#') !== 0) {
+      if (item.lastIndexOf('#') !== 0) {
         return Errors.WHITE_SPACE;
       }
-      if (!hashTagsRegExp.test(hashtags[i])) {
+      if (!hashTagsRegExp.test(item)) {
         return Errors.FORBIDDEN_CHARACTERS;
       }
-      if (hashtags[i].length > HASHTAGS_MAX_LENGTH) {
+      if (item.length > HASHTAGS_MAX_LENGTH) {
         return Errors.TOO_LONG;
       }
-      var findDuplicateHashtags = hashtags.filter(function (item) {
-        return item === hashtags[i];
+      var findDuplicateHashtags = hashtags.filter(function (hashtag) {
+        return hashtag === item;
       });
       if (findDuplicateHashtags.length > 1) {
         return Errors.DUPLICATE;
       }
-    }
-    if (hashtags.length > HASHTAGS_MAX) {
-      return Errors.TOO_MUCH;
-    }
-    return '';
+      if (hashtags.length > HASHTAGS_MAX) {
+        return Errors.TOO_MUCH;
+      }
+      return '';
+    });
   };
 
   var validateTextarea = function () {
