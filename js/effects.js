@@ -14,9 +14,14 @@
   var HEAT_MAX = 3;
   var currentEffect = Filter.ORIGIN;
 
+  var DEFAULT_EFFECT_DEPTH = 100 + '%';
+  var DEFAULT_EFFECT_PIN = 100 + '%';
+
   var imgUploadPreview = document.querySelector('.img-upload__preview img');
   var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
   var effectLevelLine = document.querySelector('.effect-level__line');
+  var effectLevelDepth = document.querySelector('.effect-level__depth');
+  var effectLevelPin = document.querySelector('.effect-level__pin');
 
   var selectEffect = function (value) {
     switch (currentEffect) {
@@ -48,8 +53,8 @@
     imgUploadPreview.style.filter = selectEffect(1);
   };
 
-  var getSaturationValue = function (evt) {
-    return (evt.target.offsetLeft / effectLevelLine.offsetWidth).toFixed(2);
+  var getSaturationValue = function () {
+    return (effectLevelPin.offsetLeft / effectLevelLine.offsetWidth).toFixed(2);
   };
 
   var onSaturationChange = function (evt) {
@@ -57,8 +62,43 @@
     imgUploadPreview.style.filter = selectEffect(value);
   };
 
+  var moveSetup = function (evt) {
+    var startCoordsX = evt.clientX;
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      var shiftX = startCoordsX - moveEvt.clientX;
+      startCoordsX = moveEvt.clientX;
+
+      var newCoordX = effectLevelPin.offsetLeft - shiftX;
+      if (newCoordX >= 0 && newCoordX <= effectLevelLine.clientWidth) {
+        effectLevelPin.style.left = newCoordX + 'px';
+        effectLevelDepth.style.width = newCoordX + 'px';
+        onSaturationChange();
+      }
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+
+  var resetSliderValue = function () {
+    effectLevelPin.style.left = DEFAULT_EFFECT_PIN;
+    effectLevelDepth.style.width = DEFAULT_EFFECT_DEPTH;
+    imgUploadPreview.style.filter = '';
+    imgUploadPreview.style.transform = '';
+  };
+
   window.effects = {
     onEffectChange: onEffectChange,
-    onSaturationChange: onSaturationChange
+    onSaturationChange: onSaturationChange,
+    moveSetup: moveSetup,
+    resetSliderValue: resetSliderValue
   };
 }());

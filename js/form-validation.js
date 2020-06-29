@@ -18,33 +18,34 @@
 
   var validateHashtags = function (value) {
     var hashtags = value.toLowerCase().trim().split(/\s+/);
+    var errors = [];
     hashtags.forEach(function (item) {
       if (item[0] !== '#') {
-        return Errors.LOST_HASH;
+        errors.push(Errors.LOST_HASH);
       }
       if (item.length === 1 && item === '#') {
-        return Errors.ONLY_HASH;
+        errors.push(Errors.ONLY_HASH);
       }
       if (item.lastIndexOf('#') !== 0) {
-        return Errors.WHITE_SPACE;
+        errors.push(Errors.WHITE_SPACE);
       }
       if (!hashTagsRegExp.test(item)) {
-        return Errors.FORBIDDEN_CHARACTERS;
+        errors.push(Errors.FORBIDDEN_CHARACTERS);
       }
       if (item.length > HASHTAGS_MAX_LENGTH) {
-        return Errors.TOO_LONG;
+        errors.push(Errors.TOO_LONG);
       }
       var findDuplicateHashtags = hashtags.filter(function (hashtag) {
-        return hashtag === item;
+        return (hashtag === item);
       });
       if (findDuplicateHashtags.length > 1) {
-        return Errors.DUPLICATE;
+        errors.push(Errors.DUPLICATE);
       }
       if (hashtags.length > HASHTAGS_MAX) {
-        return Errors.TOO_MUCH;
+        errors.push(Errors.TOO_MUCH);
       }
-      return '';
     });
+    return errors;
   };
 
   var validateTextarea = function () {

@@ -37,7 +37,8 @@
     scaleControlBigger.addEventListener('click', window.scale.onScaleControlBiggerPress);
     imgUploadEffectLevel.classList.add('hidden');
     imgUploadEffectsContainer.addEventListener('change', window.effects.onEffectChange);
-    effectLevelPin.addEventListener('mouseup', window.effects.onSaturationChange);
+    effectLevelPin.addEventListener('mousedown', window.effects.moveSetup);
+    window.effects.resetSliderValue();
     textHashtags.addEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
     });
@@ -61,7 +62,7 @@
     scaleControlSmaller.removeEventListener('click', window.scale.onScaleControlSmallerPress);
     scaleControlBigger.removeEventListener('click', window.scale.onScaleControlBiggerPress);
     imgUploadEffectsContainer.removeEventListener('change', window.effects.onEffectChange);
-    effectLevelPin.removeEventListener('mouseup', window.effects.onSaturationChange);
+    effectLevelPin.removeEventListener('mousedown', window.effects.moveSetup);
     picturesList.removeEventListener('click', window.onCustomPhotoClick);
     picturesList.removeEventListener('keydown', window.photoPreview.onPreviewEnterPress);
     textHashtags.removeEventListener('input', function (evt) {
