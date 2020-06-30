@@ -32,6 +32,7 @@
     currentEffect = evt.target.value;
     imgUploadPreview.className = '';
     imgUploadPreview.style.filter = VARIABLES.Filter.ORIGIN;
+    window.scale.scaleControlInput.value = window.scale.currentScaleValue;
     imgUploadPreview.classList.add('effects__preview--' + evt.target.value);
     if (evt.target.value !== 'none') {
       imgUploadEffectLevel.classList.remove('hidden');

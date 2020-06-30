@@ -31,6 +31,8 @@
   window.scale = {
     onScaleControlBiggerPress: onScaleControlBiggerPress,
     onScaleControlSmallerPress: onScaleControlSmallerPress,
-    resizePhoto: resizePhoto
+    resizePhoto: resizePhoto,
+    scaleControlInput: scaleControlInput,
+    currentScaleValue: currentScaleValue
   };
 }());
