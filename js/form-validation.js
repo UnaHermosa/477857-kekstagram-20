@@ -16,7 +16,7 @@
       if (item === '#') {
         errors.push(VARIABLES.Errors.ONLY_HASH);
       }
-      if (!item.lastIndexOf('#')) {
+      if (item.lastIndexOf('#') !== 0) {
         errors.push(VARIABLES.Errors.WHITE_SPACE);
       }
       if (!VARIABLES.hashTagsRegExp.test(item)) {
