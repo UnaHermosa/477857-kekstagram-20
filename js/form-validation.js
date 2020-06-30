@@ -23,10 +23,10 @@
       if (item[0] !== '#') {
         errors.push(Errors.LOST_HASH);
       }
-      if (item.length === 1 && item === '#') {
+      if (item === '#') {
         errors.push(Errors.ONLY_HASH);
       }
-      if (item.lastIndexOf('#') !== 0) {
+      if (!item.lastIndexOf('#')) {
         errors.push(Errors.WHITE_SPACE);
       }
       if (!hashTagsRegExp.test(item)) {
