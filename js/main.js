@@ -88,7 +88,7 @@
   }
 
   var findPhotoData = function (customPhoto) {
-    var photos = window.data.photos;
+    var photos = window.pictures.getLoadedData();
     photos.forEach(function (item) {
       if (customPhoto === item.url) {
         window.photoPreview.bigPhoto(item);

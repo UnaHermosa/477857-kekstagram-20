@@ -46,6 +46,9 @@ var Scale = {
   INITIAL: 100
 };
 var PERCENT = 0.01;
+var URL_LOAD = 'https://javascript.pages.academy/kekstagram/data';
+var TIMEOUT = 10000;
+var SUCCESS_STATUS_CODE = 200;
 
 window.variables = {
   PICTURES_AMOUNT: PICTURES_AMOUNT,
@@ -64,5 +67,8 @@ window.variables = {
   hashTagsRegExp: hashTagsRegExp,
   Errors: Errors,
   Scale: Scale,
-  PERCENT: PERCENT
+  PERCENT: PERCENT,
+  URL_LOAD: URL_LOAD,
+  TIMEOUT: TIMEOUT,
+  SUCCESS_STATUS_CODE: SUCCESS_STATUS_CODE
 };

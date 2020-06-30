@@ -17,12 +17,11 @@
   };
 
   var renderComments = function (photo) {
-    var fragment = document.createDocumentFragment();
     photo.comments.forEach(function (item) {
-      fragment.appendChild(createComment(item));
+      window.pictures.fragment.appendChild(createComment(item));
     });
     socialCommentsList.textContent = '';
-    socialCommentsList.appendChild(fragment);
+    socialCommentsList.appendChild(window.pictures.fragment);
   };
 
   var renderBigPhoto = function (photo) {
