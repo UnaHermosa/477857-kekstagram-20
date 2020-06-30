@@ -1,19 +1,6 @@
 'use strict';
 (function () {
-  var HASHTAGS_MAX = 5;
-  var HASHTAGS_MAX_LENGTH = 20;
-  var TEXTAREA_MAX_LENGTH = 140;
-  var hashTagsRegExp = /^#[a-zа-яA-ZА-Я0-9]*$/;
-  var Errors = {
-    LOST_HASH: 'Хэштег должен начинаться с #!',
-    ONLY_HASH: 'Хэштег не может быть только #!',
-    WHITE_SPACE: 'Между хэштегами должен быть пробел!',
-    FORBIDDEN_CHARACTERS: 'После # должны быть только буквы и числа. Нельзя использовать пробел, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д.!',
-    TOO_LONG: 'Хэштег не может быть длинее 20 символов, включая #!',
-    DUPLICATE: 'Один и тот же хэштег не может быть использован дважды!',
-    TOO_MUCH: 'Нельзя указать больше пяти хэштегов!'
-  };
-
+  var VARIABLES = window.variables;
   var textareaDescription = document.querySelector('.text__description');
 
   var validateHashtags = function (value) {
@@ -21,36 +8,36 @@
     var errors = [];
     hashtags.forEach(function (item) {
       if (item[0] !== '#') {
-        errors.push(Errors.LOST_HASH);
+        errors.push(VARIABLES.Errors.LOST_HASH);
       }
       if (item === '#') {
-        errors.push(Errors.ONLY_HASH);
+        errors.push(VARIABLES.Errors.ONLY_HASH);
       }
       if (!item.lastIndexOf('#')) {
-        errors.push(Errors.WHITE_SPACE);
+        errors.push(VARIABLES.Errors.WHITE_SPACE);
       }
-      if (!hashTagsRegExp.test(item)) {
-        errors.push(Errors.FORBIDDEN_CHARACTERS);
+      if (!VARIABLES.hashTagsRegExp.test(item)) {
+        errors.push(VARIABLES.Errors.FORBIDDEN_CHARACTERS);
       }
-      if (item.length > HASHTAGS_MAX_LENGTH) {
-        errors.push(Errors.TOO_LONG);
+      if (item.length > VARIABLES.HASHTAGS_MAX_LENGTH) {
+        errors.push(VARIABLES.Errors.TOO_LONG);
       }
       var findDuplicateHashtags = hashtags.filter(function (hashtag) {
         return (hashtag === item);
       });
       if (findDuplicateHashtags.length > 1) {
-        errors.push(Errors.DUPLICATE);
+        errors.push(VARIABLES.Errors.DUPLICATE);
       }
-      if (hashtags.length > HASHTAGS_MAX) {
-        errors.push(Errors.TOO_MUCH);
+      if (hashtags.length > VARIABLES.HASHTAGS_MAX) {
+        errors.push(VARIABLES.Errors.TOO_MUCH);
       }
     });
     return errors;
   };
 
   var validateTextarea = function () {
-    if (textareaDescription.value.length > TEXTAREA_MAX_LENGTH) {
-      textareaDescription.setCustomValidity('Длина комментария не может составлять больше 140 символов! Необходимо удалить ' + (textareaDescription.value.length - TEXTAREA_MAX_LENGTH) + ' символа(ов).');
+    if (textareaDescription.value.length > VARIABLES.TEXTAREA_MAX_LENGTH) {
+      textareaDescription.setCustomValidity('Длина комментария не может составлять больше 140 символов! Необходимо удалить ' + (textareaDescription.value.length - VARIABLES.TEXTAREA_MAX_LENGTH) + ' символа(ов).');
     } else {
       textareaDescription.setCustomValidity('');
     }
