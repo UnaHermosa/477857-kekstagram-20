@@ -6,6 +6,9 @@
   var validateHashtags = function (value) {
     var hashtags = value.toLowerCase().trim().split(/\s+/);
     var errors = [];
+    if (hashtags.length > VARIABLES.HASHTAGS_MAX) {
+      errors.push(VARIABLES.Errors.TOO_MUCH);
+    }
     hashtags.forEach(function (item) {
       if (item[0] !== '#') {
         errors.push(VARIABLES.Errors.LOST_HASH);
@@ -28,19 +31,31 @@
       if (findDuplicateHashtags.length > 1) {
         errors.push(VARIABLES.Errors.DUPLICATE);
       }
-      if (hashtags.length > VARIABLES.HASHTAGS_MAX) {
-        errors.push(VARIABLES.Errors.TOO_MUCH);
-      }
     });
-    return errors;
+    var sortingErrorsArr = function (arr) {
+      var sortedArr = [];
+      arr.forEach(function (item) {
+        if (!sortedArr.includes(item)) {
+          sortedArr.push(item);
+        }
+      });
+      return sortedArr;
+    };
+    var message;
+    if (errors.length === 0) {
+      message = '';
+    } else {
+      message = sortingErrorsArr(errors).join(' \n');
+    }
+    return message;
   };
 
   var validateTextarea = function () {
+    var message = '';
     if (textareaDescription.value.length > VARIABLES.TEXTAREA_MAX_LENGTH) {
-      textareaDescription.setCustomValidity('Длина комментария не может составлять больше 140 символов! Необходимо удалить ' + (textareaDescription.value.length - VARIABLES.TEXTAREA_MAX_LENGTH) + ' символа(ов).');
-    } else {
-      textareaDescription.setCustomValidity('');
+      message = 'Длина комментария не может составлять больше 140 символов! Необходимо удалить ' + (textareaDescription.value.length - VARIABLES.TEXTAREA_MAX_LENGTH) + ' символа(ов).';
     }
+    return message;
   };
 
   window.formValidation = {

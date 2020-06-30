@@ -42,7 +42,9 @@
     textHashtags.addEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
     });
-    textareaDescription.addEventListener('input', window.formValidation.validationTextarea);
+    textareaDescription.addEventListener('input', function (evt) {
+      textareaDescription.setCustomValidity(window.formValidation.validateTextarea(evt.target.value));
+    });
     textareaDescription.addEventListener('focus', onInputFocus);
     textareaDescription.addEventListener('blur', onInputBlur);
     fileCloseModal.addEventListener('click', function () {
@@ -68,7 +70,9 @@
     textHashtags.removeEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
     });
-    textareaDescription.removeEventListener('input', window.formValidation.validateTextarea);
+    textareaDescription.removeEventListener('input', function (evt) {
+      textareaDescription.setCustomValidity(window.formValidation.validateTextarea(evt.target.value));
+    });
     textareaDescription.removeEventListener('focus', onInputFocus);
     textareaDescription.removeEventListener('blur', onInputBlur);
     fileCloseModal.removeEventListener('click', function () {
