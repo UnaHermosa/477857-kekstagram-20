@@ -28,6 +28,7 @@
   };
 
   var onEffectChange = function (evt) {
+    resetSliderValue();
     currentEffect = evt.target.value;
     imgUploadPreview.className = '';
     imgUploadPreview.style.filter = VARIABLES.Filter.ORIGIN;
