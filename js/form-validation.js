@@ -18,33 +18,34 @@
 
   var validateHashtags = function (value) {
     var hashtags = value.toLowerCase().trim().split(/\s+/);
-    for (var i = 0; i < hashtags.length; i++) {
-      if (hashtags[i][0] !== '#') {
-        return Errors.LOST_HASH;
+    var errors = [];
+    hashtags.forEach(function (item) {
+      if (item[0] !== '#') {
+        errors.push(Errors.LOST_HASH);
       }
-      if (hashtags.length === 1 && hashtags[i] === '#') {
-        return Errors.ONLY_HASH;
+      if (item === '#') {
+        errors.push(Errors.ONLY_HASH);
       }
-      if (hashtags[i].lastIndexOf('#') !== 0) {
-        return Errors.WHITE_SPACE;
+      if (!item.lastIndexOf('#')) {
+        errors.push(Errors.WHITE_SPACE);
       }
-      if (!hashTagsRegExp.test(hashtags[i])) {
-        return Errors.FORBIDDEN_CHARACTERS;
+      if (!hashTagsRegExp.test(item)) {
+        errors.push(Errors.FORBIDDEN_CHARACTERS);
       }
-      if (hashtags[i].length > HASHTAGS_MAX_LENGTH) {
-        return Errors.TOO_LONG;
+      if (item.length > HASHTAGS_MAX_LENGTH) {
+        errors.push(Errors.TOO_LONG);
       }
-      var findDuplicateHashtags = hashtags.filter(function (item) {
-        return item === hashtags[i];
+      var findDuplicateHashtags = hashtags.filter(function (hashtag) {
+        return (hashtag === item);
       });
       if (findDuplicateHashtags.length > 1) {
-        return Errors.DUPLICATE;
+        errors.push(Errors.DUPLICATE);
       }
-    }
-    if (hashtags.length > HASHTAGS_MAX) {
-      return Errors.TOO_MUCH;
-    }
-    return '';
+      if (hashtags.length > HASHTAGS_MAX) {
+        errors.push(Errors.TOO_MUCH);
+      }
+    });
+    return errors;
   };
 
   var validateTextarea = function () {
