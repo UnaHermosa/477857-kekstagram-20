@@ -17,9 +17,9 @@
 
   var successHandler = function (data) {
     loadedData = data;
-    for (var i = 0; i < loadedData.length; i++) {
-      fragment.appendChild(createPhotoElement(loadedData[i]));
-    }
+    loadedData.forEach(function (item) {
+      fragment.appendChild(createPhotoElement(item));
+    });
     picturesList.appendChild(fragment);
   };
 
