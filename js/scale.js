@@ -1,17 +1,11 @@
 'use strict';
 (function () {
-  var Scale = {
-    STEP: 25,
-    MIN: 25,
-    MAX: 100,
-    INITIAL: 100
-  };
-  var PERCENT = 0.01;
-  var currentScaleValue = Scale.INITIAL;
+  var VARIABLES = window.variables;
+  var currentScaleValue = VARIABLES.Scale.INITIAL;
 
   var resizePhoto = function () {
     scaleControlInput.value = currentScaleValue + '%';
-    imgUploadPreview.style.transform = 'scale(' + currentScaleValue * PERCENT + ')';
+    imgUploadPreview.style.transform = 'scale(' + currentScaleValue * VARIABLES.PERCENT + ')';
   };
 
   var imgUploadPreview = document.querySelector('.img-upload__preview img');
@@ -19,24 +13,26 @@
   var scaleControlInput = imgUploadScale.querySelector('.scale__control--value');
 
   var onScaleControlSmallerPress = function () {
-    if (currentScaleValue <= Scale.INITIAL && currentScaleValue > Scale.MIN) {
-      currentScaleValue -= Scale.STEP;
+    if (currentScaleValue <= VARIABLES.Scale.INITIAL && currentScaleValue > VARIABLES.Scale.MIN) {
+      currentScaleValue -= VARIABLES.Scale.STEP;
       scaleControlInput.value = currentScaleValue + '%';
-      imgUploadPreview.style.transform = 'scale(' + currentScaleValue * PERCENT + ')';
+      imgUploadPreview.style.transform = 'scale(' + currentScaleValue * VARIABLES.PERCENT + ')';
     }
   };
 
   var onScaleControlBiggerPress = function () {
-    if (currentScaleValue >= Scale.MIN && currentScaleValue < Scale.INITIAL) {
-      currentScaleValue += Scale.STEP;
+    if (currentScaleValue >= VARIABLES.Scale.MIN && currentScaleValue < VARIABLES.Scale.INITIAL) {
+      currentScaleValue += VARIABLES.Scale.STEP;
       scaleControlInput.value = currentScaleValue + '%';
-      imgUploadPreview.style.transform = 'scale(' + currentScaleValue * PERCENT + ')';
+      imgUploadPreview.style.transform = 'scale(' + currentScaleValue * VARIABLES.PERCENT + ')';
     }
   };
 
   window.scale = {
     onScaleControlBiggerPress: onScaleControlBiggerPress,
     onScaleControlSmallerPress: onScaleControlSmallerPress,
-    resizePhoto: resizePhoto
+    resizePhoto: resizePhoto,
+    scaleControlInput: scaleControlInput,
+    currentScaleValue: currentScaleValue
   };
 }());

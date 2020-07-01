@@ -1,21 +1,8 @@
 'use strict';
 (function () {
-  var Filter = {
-    CHROME: 'chrome',
-    SEPIA: 'sepia',
-    MARVIN: 'marvin',
-    PHOBOS: 'phobos',
-    HEAT: 'heat',
-    ORIGIN: 'none'
-  };
+  var VARIABLES = window.variables;
 
-  var PHOBOS_MAX = 3;
-  var MARVIN_MAX = 100;
-  var HEAT_MAX = 3;
-  var currentEffect = Filter.ORIGIN;
-
-  var DEFAULT_EFFECT_DEPTH = 100 + '%';
-  var DEFAULT_EFFECT_PIN = 100 + '%';
+  var currentEffect = VARIABLES.Filter.ORIGIN;
 
   var imgUploadPreview = document.querySelector('.img-upload__preview img');
   var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
@@ -25,25 +12,26 @@
 
   var selectEffect = function (value) {
     switch (currentEffect) {
-      case Filter.CHROME :
+      case VARIABLES.Filter.CHROME :
         return 'grayscale(' + value + ')';
-      case Filter.SEPIA:
+      case VARIABLES.Filter.SEPIA:
         return 'sepia(' + value + ')';
-      case Filter.MARVIN:
-        return 'invert(' + value * MARVIN_MAX + '%)';
-      case Filter.PHOBOS:
-        return 'blur(' + PHOBOS_MAX * value + 'px)';
-      case Filter.HEAT:
-        return 'brightness(' + HEAT_MAX * value + ')';
+      case VARIABLES.Filter.MARVIN:
+        return 'invert(' + value * VARIABLES.MARVIN_MAX + '%)';
+      case VARIABLES.Filter.PHOBOS:
+        return 'blur(' + VARIABLES.PHOBOS_MAX * value + 'px)';
+      case VARIABLES.Filter.HEAT:
+        return 'brightness(' + VARIABLES.HEAT_MAX * value + ')';
       default:
         return 'none';
     }
   };
 
   var onEffectChange = function (evt) {
+    resetSliderValue();
     currentEffect = evt.target.value;
     imgUploadPreview.className = '';
-    imgUploadPreview.style.filter = Filter.ORIGIN;
+    imgUploadPreview.style.filter = VARIABLES.Filter.ORIGIN;
     imgUploadPreview.classList.add('effects__preview--' + evt.target.value);
     if (evt.target.value !== 'none') {
       imgUploadEffectLevel.classList.remove('hidden');
@@ -89,16 +77,14 @@
   };
 
   var resetSliderValue = function () {
-    effectLevelPin.style.left = DEFAULT_EFFECT_PIN;
-    effectLevelDepth.style.width = DEFAULT_EFFECT_DEPTH;
+    effectLevelPin.style.left = window.variables.DEFAULT_EFFECT_PIN;
+    effectLevelDepth.style.width = window.variables.DEFAULT_EFFECT_DEPTH;
     imgUploadPreview.style.filter = '';
-    imgUploadPreview.style.transform = '';
   };
 
   window.effects = {
     onEffectChange: onEffectChange,
     onSaturationChange: onSaturationChange,
     moveSetup: moveSetup,
-    resetSliderValue: resetSliderValue
   };
 }());
