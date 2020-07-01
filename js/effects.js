@@ -9,7 +9,6 @@
   var effectLevelLine = document.querySelector('.effect-level__line');
   var effectLevelDepth = document.querySelector('.effect-level__depth');
   var effectLevelPin = document.querySelector('.effect-level__pin');
-  var scaleControlValue = document.querySelector('.scale__control--value');
 
   var selectEffect = function (value) {
     switch (currentEffect) {
