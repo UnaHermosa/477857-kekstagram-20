@@ -77,14 +77,15 @@
   };
 
   var resetSliderValue = function () {
-    effectLevelPin.style.left = VARIABLES.DEFAULT_EFFECT_PIN;
-    effectLevelDepth.style.width = VARIABLES.DEFAULT_EFFECT_DEPTH;
+    effectLevelPin.style.left = window.variables.DEFAULT_EFFECT_PIN;
+    effectLevelDepth.style.width = window.variables.DEFAULT_EFFECT_DEPTH;
+    imgUploadPreview.style.filter = '';
+    console.log(window.scale.scaleControlInput.value);
   };
 
   window.effects = {
     onEffectChange: onEffectChange,
     onSaturationChange: onSaturationChange,
     moveSetup: moveSetup,
-    resetSliderValue: resetSliderValue
   };
 }());

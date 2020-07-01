@@ -16,6 +16,7 @@
     if (currentScaleValue <= VARIABLES.Scale.INITIAL && currentScaleValue > VARIABLES.Scale.MIN) {
       currentScaleValue -= VARIABLES.Scale.STEP;
       scaleControlInput.value = currentScaleValue + '%';
+      console.log(scaleControlInput.value);
       imgUploadPreview.style.transform = 'scale(' + currentScaleValue * VARIABLES.PERCENT + ')';
     }
   };
@@ -24,6 +25,7 @@
     if (currentScaleValue >= VARIABLES.Scale.MIN && currentScaleValue < VARIABLES.Scale.INITIAL) {
       currentScaleValue += VARIABLES.Scale.STEP;
       scaleControlInput.value = currentScaleValue + '%';
+      console.log(scaleControlInput.value);
       imgUploadPreview.style.transform = 'scale(' + currentScaleValue * VARIABLES.PERCENT + ')';
     }
   };

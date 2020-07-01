@@ -10,6 +10,8 @@
   var picturesList = document.querySelector('.pictures');
   var bigPhoto = document.querySelector('.big-picture');
   var bigPictureCloseButton = bigPhoto.querySelector('.big-picture__cancel');
+  var currentEffect = window.variables.Filter.ORIGIN;
+  var imgUploadPreview = document.querySelector('.img-upload__preview img');
 
   document.querySelector('.pictures__title').classList.remove('visually-hidden');
 
@@ -32,13 +34,13 @@
     document.addEventListener('keydown', onModalEscapePress);
     textHashtags.addEventListener('focus', onInputFocus);
     textHashtags.addEventListener('blur', onInputBlur);
-    window.scale.resizePhoto();
+    imgUploadPreview.style.transform = 'scale(' + window.scale.currentScaleValue * window.variables.PERCENT + ')';
+    imgUploadPreview.style.filter = currentEffect;
     scaleControlSmaller.addEventListener('click', window.scale.onScaleControlSmallerPress);
     scaleControlBigger.addEventListener('click', window.scale.onScaleControlBiggerPress);
     imgUploadEffectLevel.classList.add('hidden');
     imgUploadEffectsContainer.addEventListener('change', window.effects.onEffectChange);
     effectLevelPin.addEventListener('mousedown', window.effects.moveSetup);
-    window.effects.resetSliderValue();
     textHashtags.addEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
     });
