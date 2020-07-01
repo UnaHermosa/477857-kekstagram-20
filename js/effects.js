@@ -9,6 +9,7 @@
   var effectLevelLine = document.querySelector('.effect-level__line');
   var effectLevelDepth = document.querySelector('.effect-level__depth');
   var effectLevelPin = document.querySelector('.effect-level__pin');
+  var scaleControlValue = document.querySelector('.scale__control--value');
 
   var selectEffect = function (value) {
     switch (currentEffect) {
@@ -32,7 +33,6 @@
     currentEffect = evt.target.value;
     imgUploadPreview.className = '';
     imgUploadPreview.style.filter = VARIABLES.Filter.ORIGIN;
-    window.scale.scaleControlInput.value = window.scale.currentScaleValue;
     imgUploadPreview.classList.add('effects__preview--' + evt.target.value);
     if (evt.target.value !== 'none') {
       imgUploadEffectLevel.classList.remove('hidden');
@@ -80,8 +80,6 @@
   var resetSliderValue = function () {
     effectLevelPin.style.left = VARIABLES.DEFAULT_EFFECT_PIN;
     effectLevelDepth.style.width = VARIABLES.DEFAULT_EFFECT_DEPTH;
-    imgUploadPreview.style.filter = '';
-    imgUploadPreview.style.transform = '';
   };
 
   window.effects = {
