@@ -1,5 +1,6 @@
 'use strict';
 var PICTURES_AMOUNT = 25;
+var RANDOM_PICTURES_AMOUNT = 10;
 var LikesAmount = {
   MIN: 15,
   MAX: 200
@@ -46,15 +47,17 @@ var Scale = {
   INITIAL: 100
 };
 var PERCENT = 0.01;
-var URLs = {
+var URL_ADDRESS = {
   LOAD: 'https://javascript.pages.academy/kekstagram/data',
   SAVE: 'https://javascript.pages.academy/kekstagram'
 };
 var TIMEOUT = 10000;
 var SUCCESS_STATUS_CODE = 200;
+var DEBOUNCE_INTERVAL = 500;
 
 window.variables = {
   PICTURES_AMOUNT: PICTURES_AMOUNT,
+  RANDOM_PICTURES_AMOUNT: RANDOM_PICTURES_AMOUNT,
   LikesAmount: LikesAmount,
   CommentsAmount: CommentsAmount,
   AvatarAmount: AvatarAmount,
@@ -71,8 +74,9 @@ window.variables = {
   Errors: Errors,
   Scale: Scale,
   PERCENT: PERCENT,
-  LOAD: URLs.LOAD,
-  SAVE: URLs.SAVE,
+  LOAD: URL_ADDRESS.LOAD,
+  SAVE: URL_ADDRESS.SAVE,
   TIMEOUT: TIMEOUT,
-  SUCCESS_STATUS_CODE: SUCCESS_STATUS_CODE
+  SUCCESS_STATUS_CODE: SUCCESS_STATUS_CODE,
+  DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL
 };

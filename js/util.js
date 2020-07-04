@@ -5,22 +5,35 @@
     ESCAPE: 27
   };
 
+  var shuffleArray = function (arr) {
+    var copyArr = arr.slice();
+    for (var i = copyArr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = arr[i];
+      copyArr[i] = copyArr[j];
+      copyArr[j] = temp;
+    }
+    return copyArr;
+  };
+
+  var sortObjectsArrayByField = function (arr, field) {
+    var cloneArr = arr.slice();
+    cloneArr.sort(function (first, second) {
+      if (first[field] < second[field]) {
+        return 1;
+      } else if (first[field] > second[field]) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    return cloneArr;
+  };
+
   window.util = {
     ENTER: KeyCode.ENTER,
     ESCAPE: KeyCode.ESCAPE,
-    isEscapeEvent: function (evt, action) {
-      evt.preventDefault();
-      if (KeyCode.ESCAPE) {
-        action();
-      }
-    },
-    isEnterEvent: function (evt, action) {
-      if (KeyCode.ENTER) {
-        action();
-      }
-    },
-    getRandomValue: function (min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    shuffleArray: shuffleArray,
+    sortObjectsArrayByField: sortObjectsArrayByField
   };
 })();

@@ -4,10 +4,6 @@
   var socialCommentsList = bigPhoto.querySelector('.social__comments');
   var socialCommentItem = bigPhoto.querySelector('.social__comment');
 
-  document.querySelector('.pictures__title').classList.add('visually-hidden');
-  bigPhoto.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
-
   var createComment = function (item) {
     var newComment = socialCommentItem.cloneNode(true);
     newComment.querySelector('.social__picture').src = item.avatar;

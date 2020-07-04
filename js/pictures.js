@@ -2,6 +2,7 @@
 'use strict';
 (function () {
   var picturesList = document.querySelector('.pictures');
+  var imgFilters = document.querySelector('.img-filters');
   var fragment = document.createDocumentFragment();
 
   var createPhotoElement = function (data) {
@@ -13,18 +14,22 @@
     return photoElement;
   };
 
-  var loadedData = [];
-
-  var successHandler = function (data) {
-    loadedData = data;
-    loadedData.forEach(function (item) {
+  var renderPhoto = function (data) {
+    data.forEach(function (item) {
       fragment.appendChild(createPhotoElement(item));
     });
     picturesList.appendChild(fragment);
   };
 
+  var loadedData = [];
   var getLoadedData = function () {
     return loadedData;
+  };
+
+  var successHandler = function (data) {
+    loadedData = data;
+    renderPhoto(loadedData);
+    imgFilters.classList.remove('img-filters--inactive');
   };
 
   var errorHandler = function (errorMessage) {
@@ -42,7 +47,8 @@
 
   window.pictures = {
     fragment: fragment,
+    photo: createPhotoElement,
     getLoadedData: getLoadedData,
-    element: picturesList,
+    renderPhoto: renderPhoto
   };
 }());
