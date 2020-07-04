@@ -14,7 +14,6 @@
   var imgUploadPreview = document.querySelector('.img-upload__preview img');
   var form = document.querySelector('.img-upload__form');
   var formSubmitButton = form.querySelector('.img-upload__submit');
-  var scaleControlInput = imgUploadScale.querySelector('.scale__control--value');
 
   document.querySelector('.pictures__title').classList.remove('visually-hidden');
 
@@ -225,7 +224,7 @@
     fileUploadInput.value = '';
     textHashtags.value = '';
     textareaDescription.value = '';
-    scaleControlInput.value = window.variables.Scale.INITIAL;
+    window.scale.scaleControlInput.value = window.scale.currentScaleValue;
     textHashtags.classList.remove('text__invalid');
   };
 

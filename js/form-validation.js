@@ -25,30 +25,16 @@
       if (item.length > VARIABLES.HASHTAGS_MAX_LENGTH) {
         errors.push(VARIABLES.Errors.TOO_LONG);
       }
-      var findDuplicateHashtags = hashtags.filter(function (hashtag) {
-        return (hashtag === item);
-      });
-      if (findDuplicateHashtags.length > 1) {
+      if (hashtags.indexOf(item) !== hashtags.lastIndexOf(item)) {
         errors.push(VARIABLES.Errors.DUPLICATE);
       }
     });
 
-    var sortingErrorsArr = function (arr) {
-      var sortedArr = [];
-      arr.forEach(function (item) {
-        if (!sortedArr.includes(item)) {
-          sortedArr.push(item);
-        }
-      });
-      return sortedArr;
-    };
-    var message;
-    if (errors.length === 0) {
-      message = '';
-    } else {
-      message = sortingErrorsArr(errors).join(' \n');
-    }
-    return message;
+    var filteredErrors = errors.filter(function (item, i) {
+      return errors.indexOf(item) === i;
+    });
+
+    return filteredErrors.join(' \n');
   };
 
   var validateTextarea = function () {
