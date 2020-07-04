@@ -1,5 +1,6 @@
 'use strict';
 var PICTURES_AMOUNT = 25;
+var RANDOM_PICTURES_AMOUNT = 10;
 var LikesAmount = {
   MIN: 15,
   MAX: 200
@@ -56,6 +57,7 @@ var DEBOUNCE_INTERVAL = 500;
 
 window.variables = {
   PICTURES_AMOUNT: PICTURES_AMOUNT,
+  RANDOM_PICTURES_AMOUNT: RANDOM_PICTURES_AMOUNT,
   LikesAmount: LikesAmount,
   CommentsAmount: CommentsAmount,
   AvatarAmount: AvatarAmount,

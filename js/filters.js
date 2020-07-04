@@ -26,7 +26,7 @@
     filterDefault.classList.remove('img-filters__button--active');
     filterRandom.classList.add('img-filters__button--active');
     filterDiscussed.classList.remove('img-filters__button--active');
-    pictures.renderPhoto(util.shuffleArray(pictures.getLoadedData()).slice(0, variables.PICTURES_AMOUNT));
+    pictures.renderPhoto(util.shuffleArray(pictures.getLoadedData()).slice(0, variables.RANDOM_PICTURES_AMOUNT));
   }));
 
   filterDiscussed.addEventListener('click', debounce(function () {
