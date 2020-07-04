@@ -1,8 +1,8 @@
 'use strict';
 (function () {
-  var VARIABLES = window.variables;
+  var variables = window.variables;
 
-  var currentEffect = VARIABLES.Filter.ORIGIN;
+  var currentEffect = variables.Filter.ORIGIN;
 
   var imgUploadPreview = document.querySelector('.img-upload__preview img');
   var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
@@ -12,16 +12,16 @@
 
   var selectEffect = function (value) {
     switch (currentEffect) {
-      case VARIABLES.Filter.CHROME :
+      case variables.Filter.CHROME :
         return 'grayscale(' + value + ')';
-      case VARIABLES.Filter.SEPIA:
+      case variables.Filter.SEPIA:
         return 'sepia(' + value + ')';
-      case VARIABLES.Filter.MARVIN:
-        return 'invert(' + value * VARIABLES.MARVIN_MAX + '%)';
-      case VARIABLES.Filter.PHOBOS:
-        return 'blur(' + VARIABLES.PHOBOS_MAX * value + 'px)';
-      case VARIABLES.Filter.HEAT:
-        return 'brightness(' + VARIABLES.HEAT_MAX * value + ')';
+      case variables.Filter.MARVIN:
+        return 'invert(' + value * variables.MARVIN_MAX + '%)';
+      case variables.Filter.PHOBOS:
+        return 'blur(' + variables.PHOBOS_MAX * value + 'px)';
+      case variables.Filter.HEAT:
+        return 'brightness(' + variables.HEAT_MAX * value + ')';
       default:
         return 'none';
     }
@@ -31,7 +31,7 @@
     resetSliderValue();
     currentEffect = evt.target.value;
     imgUploadPreview.className = '';
-    imgUploadPreview.style.filter = VARIABLES.Filter.ORIGIN;
+    imgUploadPreview.style.filter = variables.Filter.ORIGIN;
     imgUploadPreview.classList.add('effects__preview--' + evt.target.value);
     if (evt.target.value !== 'none') {
       imgUploadEffectLevel.classList.remove('hidden');

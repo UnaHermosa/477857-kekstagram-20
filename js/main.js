@@ -1,27 +1,37 @@
 'use strict';
 (function () {
-  var imgUploadEffectsContainer = document.querySelector('.img-upload__effects');
-  var effectLevelPin = document.querySelector('.effect-level__pin');
-  var textareaDescription = document.querySelector('.text__description');
-  var imgUploadScale = document.querySelector('.img-upload__scale');
-  var scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
-  var scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
-  var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-  var picturesList = document.querySelector('.pictures');
-  var bigPhoto = document.querySelector('.big-picture');
-  var bigPictureCloseButton = bigPhoto.querySelector('.big-picture__cancel');
-  var currentEffect = window.variables.Filter.ORIGIN;
-  var imgUploadPreview = document.querySelector('.img-upload__preview img');
-  var form = document.querySelector('.img-upload__form');
-  var formSubmitButton = form.querySelector('.img-upload__submit');
-
-  document.querySelector('.pictures__title').classList.remove('visually-hidden');
-
   var fileUploadInput = document.querySelector('#upload-file');
   var fileCloseModal = document.querySelector('#upload-cancel');
   var fileEditingModal = document.querySelector('.img-upload__overlay');
 
+  var picturesList = document.querySelector('.pictures');
+  var bigPhoto = document.querySelector('.big-picture');
+  var bigPictureCloseButton = bigPhoto.querySelector('.big-picture__cancel');
+
+  var imgUploadPreview = document.querySelector('.img-upload__preview img');
+  var imgUploadEffectsContainer = document.querySelector('.img-upload__effects');
+  var effectLevelPin = document.querySelector('.effect-level__pin');
+  var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
+
+  var textareaDescription = document.querySelector('.text__description');
+
+  var imgUploadScale = document.querySelector('.img-upload__scale');
+  var scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
+  var scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
+
   var textHashtags = fileEditingModal.querySelector('.text__hashtags');
+
+  var form = document.querySelector('.img-upload__form');
+  var formSubmitButton = form.querySelector('.img-upload__submit');
+
+  var main = document.querySelector('main');
+  var fragment = document.createDocumentFragment();
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+
+  var currentEffect = window.variables.Filter.ORIGIN;
+
+  document.querySelector('.pictures__title').classList.add('visually-hidden');
+  bigPhoto.classList.add('hidden');
 
   var onModalEscapePress = function (evt) {
     if (evt.keyCode === window.util.ESCAPE) {
@@ -46,9 +56,6 @@
     textHashtags.addEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
       form.reportValidity();
-    });
-    textareaDescription.addEventListener('input', function (evt) {
-      textareaDescription.setCustomValidity(window.formValidation.validateTextarea(evt.target.value));
     });
     textareaDescription.addEventListener('focus', onInputFocus);
     textareaDescription.addEventListener('blur', onInputBlur);
@@ -76,9 +83,6 @@
     textHashtags.removeEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
       form.reportValidity();
-    });
-    textareaDescription.removeEventListener('input', function (evt) {
-      textareaDescription.setCustomValidity(window.formValidation.validateTextarea(evt.target.value));
     });
     textareaDescription.removeEventListener('focus', onInputFocus);
     textareaDescription.removeEventListener('blur', onInputBlur);
@@ -152,10 +156,6 @@
       textHashtags.classList.remove('text__invalid');
     }
   };
-
-  var main = document.querySelector('main');
-  var fragment = document.createDocumentFragment();
-  var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
   var uploadSuccessHandler = function () {
     var newSuccess = successTemplate.cloneNode(true);
