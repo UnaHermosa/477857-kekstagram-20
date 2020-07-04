@@ -743,6 +743,10 @@ main {
   border-radius: 5px;
 }
 
+.text__invalid {
+  outline: 2px solid red;
+}
+
 
 /**
  * Кнопка для отправки изображения

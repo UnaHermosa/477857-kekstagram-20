@@ -12,6 +12,9 @@
   var bigPictureCloseButton = bigPhoto.querySelector('.big-picture__cancel');
   var currentEffect = window.variables.Filter.ORIGIN;
   var imgUploadPreview = document.querySelector('.img-upload__preview img');
+  var form = document.querySelector('.img-upload__form');
+  var formSubmitButton = form.querySelector('.img-upload__submit');
+  var scaleControlInput = imgUploadScale.querySelector('.scale__control--value');
 
   document.querySelector('.pictures__title').classList.remove('visually-hidden');
 
@@ -43,6 +46,7 @@
     effectLevelPin.addEventListener('mousedown', window.effects.moveSetup);
     textHashtags.addEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
+      form.reportValidity();
     });
     textareaDescription.addEventListener('input', function (evt) {
       textareaDescription.setCustomValidity(window.formValidation.validateTextarea(evt.target.value));
@@ -55,6 +59,7 @@
     fileCloseModal.addEventListener('keyDown', function () {
       closeEditingModal();
     });
+    formSubmitButton.addEventListener('click', onFormSubmitButtonClick);
   };
 
   var closeEditingModal = function () {
@@ -71,6 +76,7 @@
     picturesList.removeEventListener('keydown', window.photoPreview.onPreviewEnterPress);
     textHashtags.removeEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
+      form.reportValidity();
     });
     textareaDescription.removeEventListener('input', function (evt) {
       textareaDescription.setCustomValidity(window.formValidation.validateTextarea(evt.target.value));
@@ -83,7 +89,7 @@
     fileCloseModal.removeEventListener('keyDown', function () {
       closeEditingModal();
     });
-    fileUploadInput.value = '';
+    resetFormValue();
   };
   function onInputFocus() {
     document.removeEventListener('keydown', onModalEscapePress);
@@ -136,6 +142,91 @@
       closePreviewWindow();
     });
     bigPictureCloseButton.removeEventListener('keydown', onModalEscapePress);
+  };
+
+  var onFormSubmitButtonClick = function (evt) {
+    evt.preventDefault();
+    if (!textHashtags.validity.valid) {
+      textHashtags.classList.add('text__invalid');
+    } else {
+      window.backend.save(new FormData(form), uploadSuccessHandler, uploadErrorHandler);
+      textHashtags.classList.remove('text__invalid');
+    }
+  };
+
+  var main = document.querySelector('main');
+  var fragment = document.createDocumentFragment();
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+
+  var uploadSuccessHandler = function () {
+    var newSuccess = successTemplate.cloneNode(true);
+    fragment.appendChild(newSuccess);
+    main.appendChild(fragment);
+    document.addEventListener('keydown', onSuccessModalEscPress);
+    document.addEventListener('click', onSuccessModalClick);
+    closeEditingModal();
+  };
+
+  var closeSuccessModal = function () {
+    var success = document.querySelector('.success');
+    document.removeEventListener('keydown', onSuccessModalEscPress);
+    document.removeEventListener('click', onSuccessModalClick);
+    success.parentNode.removeChild(success);
+  };
+
+  var onSuccessModalEscPress = function (evt) {
+    if (evt.keyCode === window.util.ESCAPE) {
+      closeSuccessModal();
+    }
+  };
+
+  var onSuccessModalClick = function (evt) {
+    if (!evt.target.classList.contains('success__inner')
+    && !evt.target.classList.contains('success__title')) {
+      closeSuccessModal();
+    }
+  };
+
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+
+  var uploadErrorHandler = function (errorMessage) {
+    var newError = errorTemplate.cloneNode(true);
+    newError.querySelector('.error__title').textContent = errorMessage;
+    fragment.appendChild(newError);
+    main.appendChild(fragment);
+    document.addEventListener('keydown', onErrorModalEscPress);
+    document.addEventListener('click', onErrorModalClick);
+    closeEditingModal();
+  };
+
+  var closeErrorModal = function () {
+    var error = document.querySelector('.error');
+    document.removeEventListener('keydown', onErrorModalEscPress);
+    document.removeEventListener('click', onErrorModalClick);
+    error.parentNode.removeChild(error);
+    resetFormValue();
+
+  };
+
+  var onErrorModalEscPress = function (evt) {
+    if (evt.keyCode === window.util.ESCAPE) {
+      closeErrorModal();
+    }
+  };
+
+  var onErrorModalClick = function (evt) {
+    if (!evt.target.classList.contains('error__inner')
+     && !evt.target.classList.contains('error__title')) {
+      closeErrorModal();
+    }
+  };
+
+  var resetFormValue = function () {
+    fileUploadInput.value = '';
+    textHashtags.value = '';
+    textareaDescription.value = '';
+    scaleControlInput.value = window.variables.Scale.INITIAL;
+    textHashtags.classList.remove('text__invalid');
   };
 
   picturesList.addEventListener('click', onCustomPhotoClick);
