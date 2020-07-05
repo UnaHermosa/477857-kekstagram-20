@@ -43,13 +43,13 @@
       fragment.appendChild(createComment(commentsArr.shift()));
     }
     socialCommentsList.appendChild(fragment);
-    if (commentsArr.length === 0) {
-      commentsLoaderButton.classList.add('hidden');
-    }
     photoCommentCount.textContent = '';
     fragmentCommentsCount.textContent = countCommentsRender + ' из ';
     fragmentCommentsCount.appendChild(commentsCountTotal);
     fragmentCommentsCount.innerHtml = fragmentCommentsCount.innerHtml + ' комментариев';
+    if (commentsArr.length === 0) {
+      commentsLoaderButton.classList.add('hidden');
+    }
     photoCommentCount.appendChild(fragmentCommentsCount);
   };
 

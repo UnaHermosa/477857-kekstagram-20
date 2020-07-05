@@ -72,15 +72,13 @@
   var closeEditingModal = function () {
     fileEditingModal.classList.add('hidden');
     document.querySelector('body').classList.remove('modal-open');
+    document.removeEventListener('keydown', onModalEscapePress);
     textHashtags.removeEventListener('focus', onInputFocus);
     textHashtags.removeEventListener('blur', onInputBlur);
-    fileCloseModal.removeEventListener('keydown', onModalEscapePress);
     scaleControlSmaller.removeEventListener('click', window.scale.onScaleControlSmallerPress);
     scaleControlBigger.removeEventListener('click', window.scale.onScaleControlBiggerPress);
     imgUploadEffectsContainer.removeEventListener('change', window.effects.onEffectChange);
     effectLevelPin.removeEventListener('mousedown', window.effects.moveSetup);
-    picturesList.removeEventListener('click', onCustomPhotoClick);
-    picturesList.removeEventListener('keydown', window.photoPreview.onPreviewEnterPress);
     textHashtags.removeEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
       form.reportValidity();
