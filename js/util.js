@@ -9,7 +9,7 @@
     var copyArr = arr.slice();
     for (var i = copyArr.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
-      var temp = arr[i];
+      var temp = copyArr[i];
       copyArr[i] = copyArr[j];
       copyArr[j] = temp;
     }

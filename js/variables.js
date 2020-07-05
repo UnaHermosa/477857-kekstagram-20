@@ -1,18 +1,6 @@
 'use strict';
 var PICTURES_AMOUNT = 25;
 var RANDOM_PICTURES_AMOUNT = 10;
-var LikesAmount = {
-  MIN: 15,
-  MAX: 200
-};
-var CommentsAmount = {
-  MIN: 1,
-  MAX: 3
-};
-var AvatarAmount = {
-  MIN: 1,
-  MAX: 6
-};
 var Filter = {
   CHROME: 'chrome',
   SEPIA: 'sepia',
@@ -29,7 +17,6 @@ var DEFAULT_EFFECT_DEPTH = '100%';
 var DEFAULT_EFFECT_PIN = '100%';
 var HASHTAGS_MAX = 5;
 var HASHTAGS_MAX_LENGTH = 20;
-var TEXTAREA_MAX_LENGTH = 140;
 var hashTagsRegExp = /^#[a-zа-яA-ZА-Я0-9]*$/;
 var Errors = {
   LOST_HASH: 'Хэштег должен начинаться с #!',
@@ -46,7 +33,6 @@ var Scale = {
   MAX: 100,
   INITIAL: 100
 };
-var PERCENT = 0.01;
 var URL_ADDRESS = {
   LOAD: 'https://javascript.pages.academy/kekstagram/data',
   SAVE: 'https://javascript.pages.academy/kekstagram'
@@ -54,13 +40,11 @@ var URL_ADDRESS = {
 var TIMEOUT = 10000;
 var SUCCESS_STATUS_CODE = 200;
 var DEBOUNCE_INTERVAL = 500;
+var COMMENTS_AMOUNT = 5;
 
 window.variables = {
   PICTURES_AMOUNT: PICTURES_AMOUNT,
   RANDOM_PICTURES_AMOUNT: RANDOM_PICTURES_AMOUNT,
-  LikesAmount: LikesAmount,
-  CommentsAmount: CommentsAmount,
-  AvatarAmount: AvatarAmount,
   Filter: Filter,
   PHOBOS_MAX: PHOBOS_MAX,
   MARVIN_MAX: MARVIN_MAX,
@@ -69,14 +53,13 @@ window.variables = {
   DEFAULT_EFFECT_PIN: DEFAULT_EFFECT_PIN,
   HASHTAGS_MAX: HASHTAGS_MAX,
   HASHTAGS_MAX_LENGTH: HASHTAGS_MAX_LENGTH,
-  TEXTAREA_MAX_LENGTH: TEXTAREA_MAX_LENGTH,
   hashTagsRegExp: hashTagsRegExp,
   Errors: Errors,
   Scale: Scale,
-  PERCENT: PERCENT,
   LOAD: URL_ADDRESS.LOAD,
   SAVE: URL_ADDRESS.SAVE,
   TIMEOUT: TIMEOUT,
   SUCCESS_STATUS_CODE: SUCCESS_STATUS_CODE,
-  DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL
+  DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL,
+  COMMENTS_AMOUNT: COMMENTS_AMOUNT
 };
