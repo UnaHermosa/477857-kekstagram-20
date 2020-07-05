@@ -37,7 +37,7 @@
   var addNewComments = function () {
     var fragment = document.createDocumentFragment();
     var fragmentCommentsCount = document.createDocumentFragment();
-    var countComments = commentsArr.length > window.variables.COMMENTS_AMOUNT ? window.variables.COMMENTS_AMOUNT : commentsArr.length;
+    var countComments = commentsArr.length > window.constants.COMMENTS_AMOUNT ? window.constants.COMMENTS_AMOUNT : commentsArr.length;
     countCommentsRender = countCommentsRender + countComments;
     for (var i = 0; i < countComments; i++) {
       fragment.appendChild(createComment(commentsArr.shift()));
@@ -59,7 +59,7 @@
     socialCommentsList.textContent = '';
     commentsCountTotal.textContent = comments.length + ' комментариев';
 
-    if (comments.length > window.variables.COUNT_COMMENTS) {
+    if (comments.length > window.constants.COUNT_COMMENTS) {
       commentsLoaderButton.classList.remove('hidden');
       photoCommentCount.classList.remove('hidden');
     }

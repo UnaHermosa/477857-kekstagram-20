@@ -30,7 +30,7 @@
 
   var commentsLoaderButton = bigPhoto.querySelector('.comments-loader');
 
-  var currentEffect = window.variables.Filter.ORIGIN;
+  var currentEffect = window.constants.Filter.ORIGIN;
 
   document.querySelector('.pictures__title').classList.add('visually-hidden');
   bigPhoto.classList.add('hidden');

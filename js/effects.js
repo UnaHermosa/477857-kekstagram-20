@@ -1,8 +1,8 @@
 'use strict';
 (function () {
-  var variables = window.variables;
+  var constants = window.constants;
 
-  var currentEffect = variables.Filter.ORIGIN;
+  var currentEffect = constants.Filter.ORIGIN;
 
   var imgUploadPreview = document.querySelector('.img-upload__preview img');
   var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
@@ -12,16 +12,16 @@
 
   var selectEffect = function (value) {
     switch (currentEffect) {
-      case variables.Filter.CHROME :
+      case constants.Filter.CHROME :
         return 'grayscale(' + value + ')';
-      case variables.Filter.SEPIA:
+      case constants.Filter.SEPIA:
         return 'sepia(' + value + ')';
-      case variables.Filter.MARVIN:
-        return 'invert(' + value * variables.MARVIN_MAX + '%)';
-      case variables.Filter.PHOBOS:
-        return 'blur(' + variables.PHOBOS_MAX * value + 'px)';
-      case variables.Filter.HEAT:
-        return 'brightness(' + variables.HEAT_MAX * value + ')';
+      case constants.Filter.MARVIN:
+        return 'invert(' + value * constants.MARVIN_MAX + '%)';
+      case constants.Filter.PHOBOS:
+        return 'blur(' + constants.PHOBOS_MAX * value + 'px)';
+      case constants.Filter.HEAT:
+        return 'brightness(' + constants.HEAT_MAX * value + ')';
       default:
         return 'none';
     }
@@ -31,7 +31,7 @@
     resetSliderValue();
     currentEffect = evt.target.value;
     imgUploadPreview.className = '';
-    imgUploadPreview.style.filter = variables.Filter.ORIGIN;
+    imgUploadPreview.style.filter = constants.Filter.ORIGIN;
     imgUploadPreview.classList.add('effects__preview--' + evt.target.value);
     if (evt.target.value !== 'none') {
       imgUploadEffectLevel.classList.remove('hidden');
@@ -77,8 +77,8 @@
   };
 
   var resetSliderValue = function () {
-    effectLevelPin.style.left = window.variables.DEFAULT_EFFECT_PIN;
-    effectLevelDepth.style.width = window.variables.DEFAULT_EFFECT_DEPTH;
+    effectLevelPin.style.left = constants.DEFAULT_EFFECT_PIN;
+    effectLevelDepth.style.width = constants.DEFAULT_EFFECT_DEPTH;
     imgUploadPreview.style.filter = '';
   };
 

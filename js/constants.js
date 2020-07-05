@@ -1,6 +1,7 @@
 'use strict';
 var PICTURES_AMOUNT = 25;
 var RANDOM_PICTURES_AMOUNT = 10;
+var PERCENT = 0.01;
 var Filter = {
   CHROME: 'chrome',
   SEPIA: 'sepia',
@@ -42,9 +43,10 @@ var SUCCESS_STATUS_CODE = 200;
 var DEBOUNCE_INTERVAL = 500;
 var COMMENTS_AMOUNT = 5;
 
-window.variables = {
+window.constants = {
   PICTURES_AMOUNT: PICTURES_AMOUNT,
   RANDOM_PICTURES_AMOUNT: RANDOM_PICTURES_AMOUNT,
+  PERCENT: PERCENT,
   Filter: Filter,
   PHOBOS_MAX: PHOBOS_MAX,
   MARVIN_MAX: MARVIN_MAX,
