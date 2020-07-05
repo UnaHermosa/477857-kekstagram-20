@@ -58,11 +58,6 @@
     countCommentsRender = 0;
     socialCommentsList.textContent = '';
     commentsCountTotal.textContent = comments.length + ' комментариев';
-
-    if (comments.length > window.constants.COUNT_COMMENTS) {
-      commentsLoaderButton.classList.remove('hidden');
-      photoCommentCount.classList.remove('hidden');
-    }
     addNewComments(commentsArr);
   };
 
