@@ -39,10 +39,11 @@
     fragmentCommentsCount.textContent = countCommentsRender + ' из ';
     fragmentCommentsCount.appendChild(commentsCountTotal);
     fragmentCommentsCount.innerHtml = fragmentCommentsCount.innerHtml + ' комментариев';
+    photoCommentCount.appendChild(fragmentCommentsCount);
+    socialCommentsList.appendChild(window.pictures.fragment);
     if (commentsArr.length === 0) {
       commentsLoaderButton.classList.add('hidden');
     }
-    photoCommentCount.appendChild(fragmentCommentsCount);
   };
 
   var showComments = function (comments) {
