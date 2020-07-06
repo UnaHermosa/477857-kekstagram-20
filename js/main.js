@@ -129,7 +129,6 @@
 
   var openPreviewWindow = function () {
     document.querySelector('body').classList.add('modal-open');
-    commentsLoaderButton.classList.remove('hidden');
     bigPhoto.classList.remove('hidden');
     document.addEventListener('keydown', onModalEscapePress);
     bigPictureCloseButton.addEventListener('click', function () {

@@ -1,10 +1,10 @@
 'use strict';
 (function () {
   var bigPhoto = document.querySelector('.big-picture');
-  var photoCommentCount = bigPhoto.querySelector('.social__comment-count');
   var socialCommentsList = bigPhoto.querySelector('.social__comments');
   var socialCommentItem = bigPhoto.querySelector('.social__comment');
-  var commentsLoaderButton = bigPhoto.querySelector('.comments-loader');
+  var commentsLoaderButton = document.querySelector('.social__comments-loader');
+  var photoCommentCount = bigPhoto.querySelector('.social__comment-count');
   var commentsCountTotal = photoCommentCount.querySelector('.comments-count');
 
   var commentsArr = [];
@@ -21,20 +21,12 @@
   var renderComments = function (photo) {
     photo.comments.forEach(function (item) {
       window.pictures.fragment.appendChild(createComment(item));
-      return commentsArr.push(item);
     });
     socialCommentsList.textContent = '';
     socialCommentsList.appendChild(window.pictures.fragment);
   };
 
-  var clearComments = function () {
-    var comments = socialCommentsList.querySelectorAll('.social__comment');
-    comments.forEach(function (comment) {
-      socialCommentsList.removeChild(comment);
-    });
-  };
-
-  var addNewComments = function () {
+  var addComments = function () {
     var fragment = document.createDocumentFragment();
     var fragmentCommentsCount = document.createDocumentFragment();
     var countComments = commentsArr.length > window.constants.COMMENTS_AMOUNT ? window.constants.COMMENTS_AMOUNT : commentsArr.length;
@@ -58,11 +50,15 @@
     countCommentsRender = 0;
     socialCommentsList.textContent = '';
     commentsCountTotal.textContent = comments.length + ' комментариев';
-    addNewComments(commentsArr);
+    if (comments.length > window.constants.COMMENTS_AMOUNT) {
+      commentsLoaderButton.classList.remove('hidden');
+      photoCommentCount.classList.remove('hidden');
+    }
+    addComments(commentsArr);
   };
 
   var onCommentsLoaderClick = function () {
-    addNewComments();
+    addComments();
   };
 
   var renderBigPhoto = function (photo) {
@@ -71,8 +67,6 @@
     bigPhoto.querySelector('.comments-count').textContent = photo.comments.length;
     bigPhoto.querySelector('.social__caption').textContent = photo.description;
     renderComments(photo);
-    clearComments();
-    addNewComments();
   };
 
   window.photoPreview = {
