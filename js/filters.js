@@ -2,7 +2,7 @@
 (function () {
   var util = window.util;
   var pictures = window.pictures;
-  var variables = window.variables;
+  var constants = window.constants;
   var debounce = window.debounce;
 
   var filterDefault = document.querySelector('#filter-default');
@@ -16,7 +16,7 @@
     filterDefault.classList.add('img-filters__button--active');
     filterRandom.classList.remove('img-filters__button--active');
     filterDiscussed.classList.remove('img-filters__button--active');
-    pictures.renderPhoto(pictures.getLoadedData(), variables.PICTURES_AMOUNT);
+    pictures.renderPhoto(pictures.getLoadedData(), constants.PICTURES_AMOUNT);
   }));
 
   filterRandom.addEventListener('click', debounce(function () {
@@ -26,7 +26,7 @@
     filterDefault.classList.remove('img-filters__button--active');
     filterRandom.classList.add('img-filters__button--active');
     filterDiscussed.classList.remove('img-filters__button--active');
-    pictures.renderPhoto(util.shuffleArray(pictures.getLoadedData()).slice(0, variables.RANDOM_PICTURES_AMOUNT));
+    pictures.renderPhoto(util.shuffleArray(pictures.getLoadedData()).slice(0, constants.RANDOM_PICTURES_AMOUNT));
   }));
 
   filterDiscussed.addEventListener('click', debounce(function () {

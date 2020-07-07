@@ -5,7 +5,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === window.variables.SUCCESS_STATUS_CODE) {
+      if (xhr.status === window.constants.SUCCESS_STATUS_CODE) {
         onSuccess(xhr.response);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -20,19 +20,19 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = window.variables.TIMEOUT;
+    xhr.timeout = window.constants.TIMEOUT;
     return xhr;
   };
 
   window.backend = {
     load: function (onSuccess, onError) {
       var xhr = getRequest(onSuccess, onError);
-      xhr.open('GET', window.variables.LOAD);
+      xhr.open('GET', window.constants.LOAD);
       xhr.send();
     },
     save: function (data, onSuccess, onError) {
       var xhr = getRequest(onSuccess, onError);
-      xhr.open('POST', window.variables.SAVE);
+      xhr.open('POST', window.constants.SAVE);
       xhr.send(data);
     }
   };

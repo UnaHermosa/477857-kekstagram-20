@@ -10,7 +10,7 @@
       }
       lastTimeout = window.setTimeout(function () {
         cb.apply(null, parameters);
-      }, window.variables.DEBOUNCE_INTERVAL);
+      }, window.constants.DEBOUNCE_INTERVAL);
     };
   };
 }());

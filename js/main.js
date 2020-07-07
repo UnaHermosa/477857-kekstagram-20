@@ -28,7 +28,9 @@
   var fragment = document.createDocumentFragment();
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
-  var currentEffect = window.variables.Filter.ORIGIN;
+  var commentsLoaderButton = bigPhoto.querySelector('.comments-loader');
+
+  var currentEffect = window.constants.Filter.ORIGIN;
 
   document.querySelector('.pictures__title').classList.add('visually-hidden');
   bigPhoto.classList.add('hidden');
@@ -46,7 +48,6 @@
     document.addEventListener('keydown', onModalEscapePress);
     textHashtags.addEventListener('focus', onInputFocus);
     textHashtags.addEventListener('blur', onInputBlur);
-    imgUploadPreview.style.transform = 'scale(' + window.scale.currentScaleValue * window.variables.PERCENT + ')';
     imgUploadPreview.style.filter = currentEffect;
     scaleControlSmaller.addEventListener('click', window.scale.onScaleControlSmallerPress);
     scaleControlBigger.addEventListener('click', window.scale.onScaleControlBiggerPress);
@@ -71,15 +72,13 @@
   var closeEditingModal = function () {
     fileEditingModal.classList.add('hidden');
     document.querySelector('body').classList.remove('modal-open');
+    document.removeEventListener('keydown', onModalEscapePress);
     textHashtags.removeEventListener('focus', onInputFocus);
     textHashtags.removeEventListener('blur', onInputBlur);
-    fileCloseModal.removeEventListener('keydown', onModalEscapePress);
     scaleControlSmaller.removeEventListener('click', window.scale.onScaleControlSmallerPress);
     scaleControlBigger.removeEventListener('click', window.scale.onScaleControlBiggerPress);
     imgUploadEffectsContainer.removeEventListener('change', window.effects.onEffectChange);
     effectLevelPin.removeEventListener('mousedown', window.effects.moveSetup);
-    picturesList.removeEventListener('click', window.onCustomPhotoClick);
-    picturesList.removeEventListener('keydown', window.photoPreview.onPreviewEnterPress);
     textHashtags.removeEventListener('input', function (evt) {
       textHashtags.setCustomValidity(window.formValidation.validateHashtags(evt.target.value));
       form.reportValidity();
@@ -107,6 +106,7 @@
     photos.forEach(function (item) {
       if (customPhoto === item.url) {
         window.photoPreview.bigPhoto(item);
+        window.photoPreview.showComments(item.comments);
       }
     });
   };
@@ -135,6 +135,7 @@
       closePreviewWindow();
     });
     bigPictureCloseButton.addEventListener('keydown', onModalEscapePress);
+    commentsLoaderButton.addEventListener('click', window.photoPreview.onCommentsLoaderClick);
   };
 
   var closePreviewWindow = function () {
@@ -145,6 +146,7 @@
       closePreviewWindow();
     });
     bigPictureCloseButton.removeEventListener('keydown', onModalEscapePress);
+    commentsLoaderButton.removeEventListener('click', window.photoPreview.onCommentsLoaderClick);
   };
 
   var onFormSubmitButtonClick = function (evt) {
@@ -225,6 +227,7 @@
     textHashtags.value = '';
     textareaDescription.value = '';
     window.scale.scaleControlInput.value = window.scale.currentScaleValue;
+    imgUploadPreview.style.filter = currentEffect;
     textHashtags.classList.remove('text__invalid');
   };
 
@@ -233,4 +236,8 @@
   fileUploadInput.addEventListener('change', function () {
     openEditingModal();
   });
+
+  window.main = {
+    openPreviewWindow: openPreviewWindow
+  };
 }());
