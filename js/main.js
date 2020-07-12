@@ -233,11 +233,9 @@
 
   picturesList.addEventListener('click', onCustomPhotoClick);
   picturesList.addEventListener('keydown', onPreviewEnterPress);
-  fileUploadInput.addEventListener('change', function () {
-    openEditingModal();
-  });
 
   window.main = {
-    openPreviewWindow: openPreviewWindow
+    openPreviewWindow: openPreviewWindow,
+    openEditingModal: openEditingModal
   };
 }());
