@@ -19,13 +19,7 @@
   var sortObjectsArrayByField = function (arr, field) {
     var cloneArr = arr.slice();
     cloneArr.sort(function (first, second) {
-      if (first[field] < second[field]) {
-        return 1;
-      } else if (first[field] > second[field]) {
-        return -1;
-      } else {
-        return 0;
-      }
+      return first[field] < second[field] ? 1 : -1;
     });
     return cloneArr;
   };

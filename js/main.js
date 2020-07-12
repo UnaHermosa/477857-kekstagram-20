@@ -93,13 +93,13 @@
     });
     resetFormValue();
   };
-  function onInputFocus() {
+  var onInputFocus = function () {
     document.removeEventListener('keydown', onModalEscapePress);
-  }
+  };
 
-  function onInputBlur() {
+  var onInputBlur = function () {
     document.addEventListener('keydown', onModalEscapePress);
-  }
+  };
 
   var findPhotoData = function (customPhoto) {
     var photos = window.pictures.getLoadedData();
