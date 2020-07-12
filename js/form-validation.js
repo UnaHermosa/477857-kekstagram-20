@@ -1,10 +1,15 @@
 'use strict';
 (function () {
   var constants = window.constants;
+  var textHashtags = document.querySelector('.text__hashtags');
 
   var validateHashtags = function (value) {
     var hashtags = value.toLowerCase().trim().split(/\s+/);
     var errors = [];
+    if (hashtags[0] === '') {
+      textHashtags.classList.remove('text__invalid');
+      return '';
+    }
     if (hashtags.length > constants.HASHTAGS_MAX) {
       errors.push(constants.Errors.TOO_MUCH);
     }
